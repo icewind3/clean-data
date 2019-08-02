@@ -19,9 +19,6 @@ import javax.annotation.Resource;
 @Component
 public class RedisDataManager {
 
-    @Resource(name = "userFriendsFollowersRedisTemplate")
-    private StringRedisTemplate userFriendsFollowersRedisTemplate;
-
     @Resource(name = "userInfoRedisTemplate")
     private StringRedisTemplate userInfoRedisTemplate;
 

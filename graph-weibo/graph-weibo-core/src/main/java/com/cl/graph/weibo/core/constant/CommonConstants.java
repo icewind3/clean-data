@@ -8,4 +8,6 @@ public class CommonConstants {
 
     public static final String COMMA = ",";
     public static final String UNDERLINE = "_";
+    public static final String FORWARD_SLASH = "/";
+    public static final String ZERO = "0";
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cl.graph.weibo.data.mapper.weibo.UserInfoMapper">
+
+    <select id="findAll" resultMap="userInfoResultMap">
+        SELECT a.uid, a.name, a.followers_count, a.verified_type, a.verified_type_ext
+        FROM userinfo_${suffix} a
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from userinfo_${suffix}
+    </select>
+
+    <resultMap id="userInfoResultMap" type="com.cl.graph.weibo.data.entity.UserInfo">
+        <id property="uid" column="uid" javaType="java.lang.String" jdbcType="BIGINT"/>
+        <result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="followersCount" column="followers_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="verifiedType" column="verified_type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="verifiedTypeExt" column="verified_type_ext" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+</mapper>

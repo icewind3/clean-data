@@ -1,0 +1,25 @@
+package com.cl.graph.weibo.api.mapper.marketing;
+
+import com.cl.graph.weibo.api.entity.MblogFromUid;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * @author yejianyu
+ * @date 2019/7/16
+ */
+@Mapper
+public interface MblogFromUidMapper {
+
+    List<MblogFromUid> findAllRetweet(@Param("suffix") String tableSuffix, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
+
+    long countRetweet(@Param("suffix") String tableSuffix);
+
+    List<MblogFromUid> findAll(@Param("suffix") String tableSuffix, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
+
+    long count(@Param("suffix") String tableSuffix);
+
+    int isTableExist(@Param("suffix") String suffix);
+}

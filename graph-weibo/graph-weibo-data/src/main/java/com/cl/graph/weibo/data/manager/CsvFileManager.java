@@ -60,6 +60,38 @@ public class CsvFileManager {
         }
     }
 
+    public void mergeFile(List<String> filePathList, CsvFile resultCsvFile) throws ServiceException {
+        if (filePathList == null || filePathList.size() == 0) {
+            return;
+        }
+
+        String resultFilePath = resultCsvFile.getFilePath();
+        String mergeFileName = resultCsvFile.getFileName();
+        String[] header = resultCsvFile.getHeader();
+        File resultFileDir = new File(resultFilePath);
+        if (!resultFileDir.exists()){
+            resultFileDir.mkdirs();
+        }
+        File newFile = new File(resultFilePath + File.separator + mergeFileName + FileSuffixConstants.CSV);
+
+        try (CSVPrinter csvPrinter = CsvFileHelper.writer(newFile, header)) {
+            for (String filePath : filePathList) {
+                long startTime = System.currentTimeMillis();
+                if (logger.isInfoEnabled()) {
+                    logger.info("开始读取写入文件{}", filePath);
+                }
+                try (CSVParser csvParser = CsvFileHelper.reader(filePath, header, true)) {
+                    csvPrinter.printRecords(csvParser);
+                }
+                if (logger.isInfoEnabled()) {
+                    logger.info("文件{}读取写入完成，共耗时{}ms", filePath, System.currentTimeMillis() - startTime);
+                }
+            }
+        } catch (IOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     public void mergeFile(CsvFile csvFile, String[] fileNames) throws ServiceException {
         if (fileNames == null || fileNames.length == 0) {
             return;
@@ -154,17 +186,11 @@ public class CsvFileManager {
         int count = 0;
         long startTime = System.currentTimeMillis();
         File oriFile = new File(filePath + File.separator + fileName);
-        CSVFormat csvFormat;
         boolean hasHeader = header != null && header.length > 0;
-        if (hasHeader){
-            csvFormat = CSVFormat.DEFAULT.withHeader(header).withSkipHeaderRecord();
-        } else {
-            csvFormat = CSVFormat.DEFAULT;
-        }
         CSVPrinter csvPrinter = null;
         try {
             File newFile = null;
-            try (CSVParser csvParser = CSVParser.parse(oriFile, StandardCharsets.UTF_8, csvFormat)) {
+            try (CSVParser csvParser = CsvFileHelper.reader(oriFile, header, hasHeader)) {
                 for (CSVRecord record : csvParser) {
                     if (csvPrinter == null || count >= segmentSize) {
                         if (csvPrinter != null) {
@@ -177,9 +203,9 @@ public class CsvFileManager {
                         newFile = new File(segmentPath + File.separator + fileName + index + FileSuffixConstants.CSV);
                         index++;
                         if (hasHeader){
-                            csvPrinter = CSVFormat.DEFAULT.withHeader(header).print(newFile, StandardCharsets.UTF_8);
+                            csvPrinter = CsvFileHelper.writer(newFile, header);
                         }else {
-                            csvPrinter = CSVFormat.DEFAULT.print(newFile, StandardCharsets.UTF_8);
+                            csvPrinter = CsvFileHelper.writer(newFile);
                         }
                         if (logger.isInfoEnabled()) {
                             startTime = System.currentTimeMillis();

@@ -39,7 +39,9 @@ public class WeiboMarketingDataSourceConfiguration {
     public SqlSessionFactory sessionFactory(@Qualifier("weiboMarketingDataSource")DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
         sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
-                .getResources("classpath:mybatis/mapper/**/*.xml"));
+                .getResources("classpath:mybatis/mapper/marketing/*.xml"));
+        sessionFactoryBean.setConfigLocation(new PathMatchingResourcePatternResolver()
+                .getResource("classpath:mybatis/mybatis-config.xml"));
         sessionFactoryBean.setDataSource(dataSource);
         return sessionFactoryBean.getObject();
     }

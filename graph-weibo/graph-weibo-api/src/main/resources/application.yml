@@ -1,0 +1,23 @@
+server:
+  port: 9091
+logging:
+  level:
+    root: INFO
+datasource:
+  weibo:
+    url: jdbc:mysql://192.168.2.16:3306/weibo?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+  weibo-marketing:
+    url: jdbc:mysql://192.168.2.23:3306/weibo_marketing?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: cldev
+mybatis:
+  type-aliases-package: com.cl.graph.weibo.api.entity
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+
+graph:
+  data:
+#    root-path: /data6/relationship
+    root-path: C:/Users/cl32/Desktop/relationship

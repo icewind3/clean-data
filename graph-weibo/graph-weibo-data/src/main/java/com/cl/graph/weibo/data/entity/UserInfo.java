@@ -17,6 +17,12 @@ public class UserInfo {
     @JSONField(name = "followers_count")
     private Integer followersCount;
 
+    @JSONField(name = "friends_count")
+    private Integer friendsCount;
+
+    @JSONField(name = "statuses_count")
+    private Integer statusesCount;
+
     @JSONField(name = "verified_type")
     private Integer verifiedType;
 
@@ -24,7 +30,7 @@ public class UserInfo {
     private Integer verifiedTypeExt;
 
     public boolean isBlueV(){
-        return verifiedType != null && verifiedType >= 1 && verifiedType <= 7;
+        return verifiedType != null && verifiedType >= 1 && verifiedType <= 8;
     }
 
     public boolean isPersonalBigV(){
@@ -40,7 +46,7 @@ public class UserInfo {
     }
 
     public boolean isShowV(){
-        return verifiedType != null && (verifiedType == 200 || verifiedType == 220);
+        return verifiedType != null && (verifiedType == 10 || verifiedType == 200 || verifiedType == 220);
     }
 
     public boolean isPersonalUser(){
@@ -54,5 +60,4 @@ public class UserInfo {
     public boolean isImportantUser(){
         return isShowV() || isPersonalBigV() || isCoreUser();
     }
-
 }

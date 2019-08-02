@@ -16,15 +16,21 @@ public class CsvFile {
         return new CsvFile(file.getParent(), file.getName());
     }
 
-    public CsvFile() {
+    public static CsvFile build(String filePath, String fileName){
+        return new CsvFile(filePath, fileName);
     }
 
-    public CsvFile(String filePath, String fileName) {
+    public CsvFile withHeader(String[] header){
+        this.setHeader(header);
+        return this;
+    }
+
+    private CsvFile(String filePath, String fileName) {
         this.filePath = filePath;
         this.fileName = fileName;
     }
 
-    public CsvFile(String filePath, String fileName, String[] header) {
+    private CsvFile(String filePath, String fileName, String[] header) {
         this.filePath = filePath;
         this.fileName = fileName;
         this.header = header;

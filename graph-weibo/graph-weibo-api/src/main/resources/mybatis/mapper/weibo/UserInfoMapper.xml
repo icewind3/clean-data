@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cl.graph.weibo.api.mapper.weibo.UserInfoMapper">
+
+    <select id="groupByProvince" resultMap="codeCountResultMap">
+        SELECT a.province as code, COUNT(*) as count
+        FROM userinfo_${suffix} a
+        GROUP BY a.province
+    </select>
+
+    <select id="groupByGender" resultMap="codeCountResultMap">
+        SELECT a.gender as code, COUNT(*) as count
+        FROM userinfo_${suffix} a
+        GROUP BY a.gender
+    </select>
+
+    <select id="isTableExist" resultType="int" statementType="CALLABLE">
+        SELECT COUNT(*) from information_schema.TABLES a where a.table_name = CONCAT('userinfo_', #{tableName})
+    </select>
+
+
+<!--    <resultMap id="userInfoResultMap" type="com.cl.graph.weibo.data.entity.UserInfo">-->
+<!--        <id property="uid" column="uid" javaType="java.lang.String" jdbcType="BIGINT"/>-->
+<!--        <result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--        <result property="followersCount" column="followers_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>-->
+<!--        <result property="verifiedType" column="verified_type" javaType="java.lang.Integer" jdbcType="INTEGER"/>-->
+<!--        <result property="verifiedTypeExt" column="verified_type_ext" javaType="java.lang.Integer" jdbcType="INTEGER"/>-->
+<!--    </resultMap>-->
+
+        <resultMap id="codeCountResultMap" type="com.cl.graph.weibo.api.entity.CodeCount">
+            <id property="code" column="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <result property="count" column="count" javaType="java.lang.Integer" jdbcType="BIGINT"/>
+        </resultMap>
+
+</mapper>

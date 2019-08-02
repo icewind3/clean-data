@@ -5,13 +5,66 @@
     
     <select id="findAllRetweet" resultMap="mblogFromUidResultMap">
         SELECT a.mid, a.uid, a.pid, a.retweeted_mid, a.created_at
-        FROM mblog_from_uid_${suffix} a
+        <choose>
+            <when test="suffix != null and suffix != ''">
+                FROM mblog_from_uid_${suffix} a
+            </when>
+            <otherwise>
+                FROM mblog_from_uid a
+            </otherwise>
+        </choose>
         where a.retweeted_mid IS NOT NULL
     </select>
 
     <select id="countRetweet" resultType="java.lang.Long">
-        select count(*) from mblog_from_uid_${suffix} where retweeted_mid IS NOT NULL
+        select count(*)
+        <choose>
+            <when test="suffix != null and suffix != ''">
+                FROM mblog_from_uid_${suffix} a
+            </when>
+            <otherwise>
+                FROM mblog_from_uid a
+            </otherwise>
+        </choose>
+        where retweeted_mid IS NOT NULL
     </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        <choose>
+            <when test="suffix != null and suffix != ''">
+                FROM mblog_from_uid_${suffix} a
+            </when>
+            <otherwise>
+                FROM mblog_from_uid a
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAll" resultMap="mblogFromUidResultMap">
+        SELECT a.mid, a.uid, a.pid, a.retweeted_mid, a.created_at, a.reposts_count, a.comments_count, a.attitudes_count,
+        a.text
+        <choose>
+            <when test="suffix != null and suffix != ''">
+                FROM mblog_from_uid_${suffix} a
+            </when>
+            <otherwise>
+                FROM mblog_from_uid a
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="isTableExist" resultType="int" statementType="CALLABLE">
+        SELECT COUNT(*) from information_schema.TABLES a where a.table_name = CONCAT('mblog_from_uid_', #{suffix})
+    </select>
+
+<!--    <resultMap id="mblogRetweetedResultMap" type="com.cl.graph.weibo.data.entity.MblogFromUid">-->
+<!--        <id property="mid" column="mid" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--        <result property="uid" column="uid" javaType="java.lang.String" jdbcType="BIGINT"/>-->
+<!--        <result property="pid" column="pid" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--        <result property="retweetedMid" column="retweeted_mid" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--        <result property="createTime" column="created_at" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--    </resultMap>-->
 
     <resultMap id="mblogFromUidResultMap" type="com.cl.graph.weibo.data.entity.MblogFromUid">
         <id property="mid" column="mid" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -19,6 +72,10 @@
         <result property="pid" column="pid" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="retweetedMid" column="retweeted_mid" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="createTime" column="created_at" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="repostsCount" column="reposts_count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="commentsCount" column="comments_count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="attitudesCount" column="attitudes_count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="text" column="text" javaType="java.lang.String" jdbcType="VARCHAR"/>
     </resultMap>
 
 </mapper>

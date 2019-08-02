@@ -19,7 +19,6 @@ public class HotCommentServiceTest extends BaseSpringBootTest {
     @Resource
     private HotCommentMapper hotCommentMapper;
 
-
     @Test
     public void genCommentFile() {
         String resultFilePath = "C:/Users/cl32/Downloads/微博大图";

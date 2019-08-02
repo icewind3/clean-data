@@ -1,6 +1,6 @@
 package com.cl.graph.weibo.data.web.controller;
 
-import com.cl.graph.weibo.data.service.UserFileService;
+import com.cl.graph.weibo.data.service.UserInfoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-    private final UserFileService userFileService;
+    private final UserInfoService userInfoService;
 
-    public UserController(UserFileService userFileService) {
-        this.userFileService = userFileService;
-    }
-
-    @RequestMapping(value = "/init")
-    public String initUserVertex(@RequestParam(name = "key") String key,
-                                    @RequestParam(name = "resultPath") String resultPath){
-        userFileService.genUserFile(key, resultPath);
-        return "success";
+    public UserController(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
     }
 
     @RequestMapping(value = "/initByTraverse")
     public String initUserByTraverse(@RequestParam(name = "resultPath") String resultPath){
-        userFileService.genUserFileByTraverse(resultPath);
+        userInfoService.genUserFileByTraverse(resultPath);
+        return "success";
+    }
+
+    @RequestMapping(value = "/initOne")
+    public String initUser(@RequestParam(name = "tableSuffix") String tableSuffix,
+                                     @RequestParam(name = "resultPath") String resultPath){
+        userInfoService.genUserInfoFile(resultPath + "/result", tableSuffix);
         return "success";
     }
 }

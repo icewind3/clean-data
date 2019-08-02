@@ -28,7 +28,7 @@ public class BlogLabelRedisConfig {
     public RedisConnectionFactory blogLabelConnectionFactory(){
         RedisStandaloneConfiguration redisConfiguration = new RedisStandaloneConfiguration(host, port);
         LettucePoolingClientConfiguration clientConfiguration = LettucePoolingClientConfiguration.builder()
-                .commandTimeout(Duration.ofSeconds(5000L))
+                .commandTimeout(Duration.ofSeconds(600L))
                 .build();
         return new LettuceConnectionFactory(redisConfiguration, clientConfiguration);
     }

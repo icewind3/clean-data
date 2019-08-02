@@ -1,13 +1,14 @@
 package com.cl.graph.weibo.data.web.controller;
 
+import com.cl.graph.weibo.data.manager.CsvFile;
+import com.cl.graph.weibo.data.manager.CsvFileManager;
 import com.cl.graph.weibo.data.service.HotCommentService;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.util.concurrent.CountDownLatch;
+import java.io.File;
 
 /**
  * @author yejianyu
@@ -17,9 +18,6 @@ import java.util.concurrent.CountDownLatch;
 @RestController
 public class CommentController {
 
-    @Resource(name = "commonThreadPoolTaskExecutor")
-    private ThreadPoolTaskExecutor taskExecutor;
-
     private final HotCommentService hotCommentService;
 
     public CommentController(HotCommentService hotCommentService) {
@@ -28,25 +26,27 @@ public class CommentController {
 
     @RequestMapping(value = "/init")
     public String initCommentEdge(@RequestParam(name = "resultPath") String resultPath){
-        String[] dates = {"20190415","20190416","20190417","20190418"};
-        CountDownLatch countDownLatch = new CountDownLatch(60);
-        for (String date : dates){
-            for (int i = 0; i < 15; i++) {
-                String tableSuffix = date + "_" + i;
-                taskExecutor.execute(() -> {
-                    try {
-                        hotCommentService.genCommentFile(resultPath, tableSuffix);
-                    }finally {
-                        countDownLatch.countDown();
-                    }
-                });
-            }
+        String startDate = "20190415";
+        String endDate = "20190418";
+        hotCommentService.genCommentFile(resultPath, startDate, endDate);
+        return "success";
+    }
+
+    @RequestMapping(value = "/initOne")
+    public String initCommentEdgeFromOneTable(@RequestParam(name = "tableSuffix") String tableSuffix,
+                                  @RequestParam(name = "resultPath") String resultPath){
+        hotCommentService.genCommentFile(resultPath, tableSuffix);
+        hotCommentService.mergeCommentFiles(resultPath, resultPath + "/result");
+        return "success";
+    }
+
+    @RequestMapping(value = "/mergeFile")
+    public String mergeFile(@RequestParam(name = "dataPath") String dataPath,
+                            @RequestParam(name = "resultPath", required = false) String resultPath){
+        if (StringUtils.isBlank(resultPath)){
+            resultPath = dataPath + "/result";
         }
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        hotCommentService.mergeCommentFiles(dataPath, resultPath);
         return "success";
     }
 }

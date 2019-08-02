@@ -15,4 +15,19 @@ public class MblogFromUid {
     private String pid;
     private String retweetedMid;
     private String createTime;
+
+    /**
+     * 转发数
+     */
+    private Long repostsCount;
+    /**
+     * 评论数
+     */
+    private Long commentsCount;
+    /**
+     * 点赞数
+     */
+    private Long attitudesCount;
+
+    private String text;
 }

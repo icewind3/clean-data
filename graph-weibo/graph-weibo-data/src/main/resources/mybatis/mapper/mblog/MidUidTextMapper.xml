@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cl.graph.weibo.data.mapper.mblog.MidUidTextMapper">
+
+    <select id="count" resultType="java.lang.Long">
+        select count(*) FROM mid_uid_text_${suffix} a
+    </select>
+
+    <select id="findAll" resultMap="midUidTextResultMap">
+        SELECT a.mid, a.uid, a.reposts_count, a.comments_count, a.attitudes_count,
+        a.text, a.is_retweeted, a.created_at
+        FROM mid_uid_text_${suffix} a
+    </select>
+
+    <insert id="insert" parameterType="com.cl.graph.weibo.data.entity.MidUidText">
+        INSERT INTO mid_uid_text_${suffix}
+        (mid, uid, reposts_count, comments_count, attitudes_count, text, is_retweeted, created_at)
+        VALUES
+        (#{blog.mid}, #{blog.uid}, #{blog.repostsCount}, #{blog.commentsCount}, #{blog.attitudesCount}, #{blog.text},
+         #{blog.retweeted}, #{blog.createTime})
+    </insert>
+
+    <insert id="insertAll" parameterType="java.util.List">
+        INSERT ignore INTO mid_uid_text_${suffix}
+        (mid, uid, reposts_count, comments_count,attitudes_count,text,is_retweeted,created_at)
+        VALUES
+        <foreach collection="midUidTextList" item="item" index="index" separator=",">
+            (#{item.mid}, #{item.uid}, #{item.repostsCount}, #{item.commentsCount}, #{item.attitudesCount},
+            #{item.text}, #{item.retweeted}, #{item.createTime})
+        </foreach>
+    </insert>
+
+    <resultMap id="midUidTextResultMap" type="com.cl.graph.weibo.data.entity.MidUidText">
+        <id property="mid" column="mid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="uid" column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="repostsCount" column="reposts_count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="commentsCount" column="comments_count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="attitudesCount" column="attitudes_count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="text" column="text" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="retweeted" column="is_retweeted" javaType="java.lang.Boolean" jdbcType="TINYINT"/>
+        <result property="createTime" column="created_at" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>

@@ -1,3 +1,24 @@
+redis:
+  pool:
+    maxActive: 300
+    maxIdle: 100
+    maxWait: 1000
+    # 分布式锁相关
+    testOnBorrow: true
+    timeout: 2000
+  host: ${REDIS_HOST:192.168.2.14}
+  port: ${REDIS_PORT:6379}
+  password: cldev
+  timeout: 2000
+  # 分布式锁相关
+  expireTime: 10000
+  lockTime: 10000
+  sleepTime: 50
+  # 服务或应用名
+  sysName: middleground-server-${spring.profiles}
+  enable: true
+  database: 0
+
 server:
   port: 9091
 
@@ -28,12 +49,63 @@ mybatis:
   type-aliases-package: com.cl.graph.weibo.data.entity
   mapper-locations: classpath:mybatis/mapper/**/*.xml
   config-location: classpath:mybatis/mybatis-config.xml
+
 datasource:
   weibo:
     url: jdbc:mysql://192.168.2.16:3306/weibo?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 123456
   weibo-marketing:
-      url: jdbc:mysql://192.168.2.16:3306/weibo_marketing?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.2.16:3306/weibo_marketing?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+  #    url: jdbc:mysql://192.168.2.25:3306/weibo_sample?useUnicode=true&characterEncoding=UTF-8
+  #    username: cldev
+  #    password: cldev
+  weibo-marketing2:
+    url: jdbc:mysql://192.168.2.64:3306/weibo_marketing?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+#    url: jdbc:mysql://192.168.2.25:3306/weibo_sample?useUnicode=true&characterEncoding=UTF-8
+#    username: cldev
+#    password: cldev
+#  mblog:
+#    url: jdbc:mysql://192.168.56.128:3306/weibo3?useUnicode=true&characterEncoding=UTF-8
+#    username: root
+#    password: Yjy123456.
+  mblog:
+      url: jdbc:mysql://192.168.2.23:3306/weibo2?useUnicode=true&characterEncoding=UTF-8
       username: root
-      password: 123456
+      password: cldev
+      max-active: 50
+following:
+  server:
+    #    ip: 192.168.2.16
+    ##    user: cldev
+    ##    password: cldev
+    ##    dataRoot: /data8/mysql/load_data/relationship
+    ip: 192.168.2.28
+    user: cldev
+    password: cldev
+    dataRoot: /home/cldev/chuanglin/deploy5.0.8/gs5/socialGraph
+graph:
+  weibo:
+    #    dataRoot: C:\Users\cl32\Downloads\weioboBigGraph\data
+    #    resultRoot: C:\Users\cl32\Downloads\weioboBigGraph\result
+    dataRoot: /data6/weiboBigGraphData/data
+    resultRoot: /data6/weiboBigGraphData/result
+  server:
+    ip: 192.168.2.64
+    user: xuwenlong
+    password: xuwenlong2019
+    dataRoot: /data6/weiboBigGraphData
+task:
+  weibo-retweet:
+    start: false
+    cron: 0 43 9 24 7 ?
+#    cron: 0 30 0 * * ?
+isUserTypeFromFile: true
+data:
+  path:
+#     mblog: C:/Users/cl32/Desktop/mblog3
+    mblog: /data6/blog2

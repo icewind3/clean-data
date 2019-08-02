@@ -19,4 +19,6 @@ public class FollowingRelationshipDTO {
 
     @JSONField(name = "slave")
     private Long from;
+
+    private String createTime;
 }

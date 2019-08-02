@@ -16,4 +16,10 @@ public interface MblogFromUidMapper {
     List<MblogFromUid> findAllRetweet(@Param("suffix") String tableSuffix, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
 
     long countRetweet(@Param("suffix") String tableSuffix);
+
+    List<MblogFromUid> findAll(@Param("suffix") String tableSuffix, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
+
+    long count(@Param("suffix") String tableSuffix);
+
+    int isTableExist(@Param("suffix") String suffix);
 }

@@ -23,11 +23,32 @@ public class FollowingRelationshipController {
         this.followingRelationshipService = followingRelationshipService;
     }
 
-
     @RequestMapping(value = "/init")
     public String initFollowingEdge(@RequestParam(name = "oriFilePath") String oriFilePath,
                                   @RequestParam(name = "resultPath") String resultPath){
         followingRelationshipService.genFollowingRelationshipFile(oriFilePath, resultPath);
         return "success";
     }
+
+    @RequestMapping(value = "/init2")
+    public String initFollowingEdge2(@RequestParam(name = "oriFilePath") String oriFilePath,
+                                    @RequestParam(name = "resultPath") String resultPath){
+        followingRelationshipService.genFollowingRelationshipFile2(oriFilePath, resultPath);
+        return "success";
+    }
+
+    @RequestMapping(value = "/initRemote")
+    public String initFollowingEdgeByRemote(@RequestParam(name = "oriFilePath", required = false) String oriFilePath,
+                                    @RequestParam(name = "resultPath") String resultPath){
+        followingRelationshipService.genFollowingRelationshipFileFromRemote(oriFilePath, resultPath);
+        followingRelationshipService.mergeFollowingFiles(resultPath);
+        return "success";
+    }
+
+    @RequestMapping(value = "/merge")
+    public String mergeFollowingEdge(@RequestParam(name = "resultPath") String resultPath){
+        followingRelationshipService.mergeFollowingFiles(resultPath);
+        return "success";
+    }
+
 }

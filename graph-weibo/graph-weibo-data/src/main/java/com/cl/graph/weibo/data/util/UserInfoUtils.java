@@ -25,17 +25,17 @@ public class UserInfoUtils {
             return StringUtils.EMPTY;
         }
         if (userInfo.isPersonalUser()) {
-            return "个人账户";
+            return "普通用户";
         }
         if (userInfo.isYellowV()) {
-            return "黄v";
+            return "黄V";
         }
         if (userInfo.isShowV()) {
             return "达人";
         }
         if (userInfo.isRedV()) {
-            return "红v";
+            return "红V";
         }
-        return StringUtils.EMPTY;
+        return "其他";
     }
 }
