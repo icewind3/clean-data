@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="data-mapreduce" />
+        <module name="data-hbase" />
+        <module name="data-file" />
+        <module name="user-filter" />
+        <module name="data-statistics" />
+        <module name="social-marketing" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="data-file" options="-parameters" />
+      <module name="data-hbase" options="-parameters" />
+      <module name="data-statistics" options="-parameters" />
+      <module name="social-marketing" options="-parameters" />
+      <module name="user-filter" options="-parameters" />
+    </option>
+  </component>
+</project>

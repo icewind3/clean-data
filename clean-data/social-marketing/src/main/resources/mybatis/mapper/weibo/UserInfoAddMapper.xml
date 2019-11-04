@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cl.data.social.mapper.weibo.UserInfoAddMapper">
+
+    <update id="batchUpdateImg">
+        UPDATE user_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="profile_image_url =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when uid=#{item.uid} then #{item.value}
+                </foreach>
+            </trim>
+        </trim>
+        where uid in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.uid}
+        </foreach>
+    </update>
+
+    <update id="batchUpdateCreditScore">
+        UPDATE user_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="credit_score =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when uid=#{item.uid} then #{item.value}
+                </foreach>
+            </trim>
+        </trim>
+        where uid in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.uid}
+        </foreach>
+    </update>
+
+    <update id="batchUpdateTags">
+        UPDATE user_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="ability_tags =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when uid=#{item.uid} then #{item.value}
+                </foreach>
+            </trim>
+        </trim>
+        where uid in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.uid}
+        </foreach>
+    </update>
+
+    <update id="batchUpdateBirth">
+        UPDATE user_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="birth =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when uid=#{item.uid} then #{item.value}
+                </foreach>
+            </trim>
+        </trim>
+        where uid in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.uid}
+        </foreach>
+    </update>
+
+</mapper>

@@ -1,0 +1,6 @@
+server:
+  port: 9104
+logging:
+  level:
+    root: INFO
+  file: log/data-stat.log

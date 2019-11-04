@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cl.data.hbase.mapper.marketing.MblogFromUidMapper">
+
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        FROM ${tableName} a
+    </select>
+
+    <select id="findAllBid" resultMap="mblogFromUidResultMap">
+        SELECT a.mid, a.uid, a.bid
+        FROM ${tableName} a
+    </select>
+
+    <select id="findAllRetweetedMid" resultMap="mblogFromUidResultMap">
+        SELECT a.mid, a.uid, a.retweeted_mid
+        FROM ${tableName} a
+    </select>
+
+    <select id="isTableExist" resultType="int" statementType="CALLABLE">
+        SELECT COUNT(*) from information_schema.TABLES a where a.table_name = #{tableName}
+    </select>
+
+    <resultMap id="mblogFromUidResultMap" type="com.cl.data.hbase.entity.MblogFromUid">
+        <id property="mid" column="mid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="uid" column="uid" javaType="java.lang.String" jdbcType="BIGINT"/>
+        <result property="bid" column="bid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="retweetedMid" column="retweeted_mid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="retweetedUid" column="retweeted_uid" javaType="java.lang.String" jdbcType="BIGINT"/>
+        <result property="createTime" column="created_at" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="repostsCount" column="reposts_count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="commentsCount" column="comments_count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="attitudesCount" column="attitudes_count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="text" column="text" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="retweetedText" column="retweeted_text" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>

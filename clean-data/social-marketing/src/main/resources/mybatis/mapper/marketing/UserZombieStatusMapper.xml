@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cl.data.social.mapper.marketing.UserZombieStatusMapper">
+
+    <select id="listAll" resultMap="userZombieStatusResultMap">
+        SELECT a.uid, a.total, a.zombie_total, a.suspected_level_1, a.suspected_level_2, a.suspected_level_3
+        FROM userZombieStatus a
+    </select>
+
+    <resultMap id="userZombieStatusResultMap" type="com.cl.data.social.entity.UserZombieStatus">
+        <result property="uid" column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="total" column="total" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="zombieTotal" column="zombie_total" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="suspectedLevel1" column="suspected_level_1" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="suspectedLevel2" column="suspected_level_2" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="suspectedLevel3" column="suspected_level_3" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+</mapper>

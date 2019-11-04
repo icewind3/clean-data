@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cl.data.hbase.mapper.weibo.UserBlogStateMapper">
+
+    <insert id="insert" parameterType="com.cl.data.hbase.entity.UserBlogState">
+        INSERT INTO user_blog_state
+        (uid, mblog_total, attitude_sum, comment_sum, repost_sum, attitude_avg, comment_avg, repost_avg,
+        release_mblog_early, release_mblog_lately, release_mblog_frequency)
+        VALUES (#{uid}, #{mblogTotal}, #{attitudeSum}, #{commentSum}, #{repostCount}, #{attitudeAvg}, #{commentAvg},
+        #{repostAvg}, #{releaseMblogEarly}, #{releaseMblogLately}, #{releaseMblogFrequency})
+        ON DUPLICATE KEY UPDATE
+        mblog_total = VALUES(mblog_total),
+        attitude_sum = VALUES(attitude_sum),
+        comment_sum = VALUES(comment_sum),
+        repost_sum = VALUES(repost_sum),
+        attitude_avg = VALUES(attitude_avg),
+        comment_avg = VALUES(comment_avg),
+        repost_avg = VALUES(repost_avg),
+        release_mblog_early = VALUES(release_mblog_early),
+        release_mblog_lately = VALUES(release_mblog_lately),
+        release_mblog_frequency = VALUES(release_mblog_frequency)
+    </insert>
+
+    <insert id="insertAll" parameterType="java.util.List">
+        INSERT INTO user_blog_state
+        (uid, mblog_total, attitude_sum, comment_sum, repost_sum, attitude_avg, comment_avg, repost_avg,
+        release_mblog_early, release_mblog_lately, release_mblog_frequency)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.uid},#{item.mblogTotal}, #{item.attitudeSum}, #{item.commentSum}, #{item.repostCount},
+            #{item.attitudeAvg}, #{item.commentAvg}, #{item.repostAvg}, #{item.releaseMblogEarly},
+            #{item.releaseMblogLately}, #{item.releaseMblogFrequency})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        mblog_total = VALUES(mblog_total),
+        attitude_sum = VALUES(attitude_sum),
+        comment_sum = VALUES(comment_sum),
+        repost_sum = VALUES(repost_sum),
+        attitude_avg = VALUES(attitude_avg),
+        comment_avg = VALUES(comment_avg),
+        repost_avg = VALUES(repost_avg),
+        release_mblog_early = VALUES(release_mblog_early),
+        release_mblog_lately = VALUES(release_mblog_lately),
+        release_mblog_frequency = VALUES(release_mblog_frequency)
+    </insert>
+
+</mapper>

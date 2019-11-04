@@ -1,0 +1,41 @@
+server:
+  port: 9091
+logging:
+  level:
+    root: INFO
+
+datasource:
+  weibo:
+    #    url: jdbc:mysql://192.168.2.23:3306/weibo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    #    username: root
+    #    password: cldev
+    #    max-active: 50
+    url: jdbc:mysql://192.168.2.75:3306/weibo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: cldev
+    max-active: 50
+#    url: jdbc:mysql://192.168.2.14:3308/weibo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: cldev
+#    max-active: 50
+  #    url: jdbc:mysql://192.168.2.14:3308/weibo_marketing?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+  #    username: root
+  #    password: cldev
+  #    max-active: 50
+  weibo-marketing:
+#    url: jdbc:mysql://192.168.2.14:3308/weibo_marketing?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: cldev
+#    max-active: 50
+    url: jdbc:mysql://192.168.2.55:3306/weibo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    max-active: 50
+  #    url: jdbc:mysql://192.168.2.55:3306/weibo_marketing?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+  #    username: root
+  #    password: 123456
+  #    max-active: 50
+#    url: jdbc:mysql://192.168.2.16:3306/weibo_marketing?useUnicode=true&characterEncoding=UTF-8
+#    username: root
+#    password: 123456
+#    max-active: 50

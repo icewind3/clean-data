@@ -1,0 +1,23 @@
+server:
+  port: 9104
+logging:
+  level:
+    root: INFO
+    org:
+      apache:
+        zookeeper: warn
+        hadoop: warn
+  file: log/user-filter.log
+
+hbase:
+  zookeeper:
+    #    quorum: cldev-701-02,cldev-701-05,cldev-701-09
+    quorum: 192.168.2.42,192.168.2.45,192.168.2.49
+    property:
+      clientPort: 2181
+  table-name:
+    mblog: uid_mid_blog_hbase
+zookeeper:
+  znode:
+    parent: /hbase-unsecure
+

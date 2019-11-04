@@ -1,0 +1,7 @@
+server:
+  port: 9102
+logging:
+  level:
+    root: INFO
+  file: log/data-file.log
+

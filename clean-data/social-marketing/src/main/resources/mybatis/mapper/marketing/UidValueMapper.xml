@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cl.data.social.mapper.marketing.UidValueMapper">
+
+
+    <select id="listAllSunshine" resultMap="uidValueResultMap">
+        select a.uid, a.sunshine_level as value
+        from sunshine a
+    </select>
+
+    <select id="listAllUserImg" resultMap="uidValueResultMap">
+        select a.uid, a.profile_image_url as value
+        from user_img a where timestamp > '2019-09-20 00:00:00'
+    </select>
+
+    <select id="listAllExamine" resultMap="uidValueResultMap">
+        select a.uid, a.examine as value
+        from friendly_link_trade_company a
+    </select>
+
+    <select id="listAllTags" resultMap="uidValueResultMap">
+        select a.uid, a.tags as value
+        from userinfo_tag a
+    </select>
+
+    <select id="listAllBirth" resultMap="uidValueResultMap">
+        select a.uid, a.birth as value
+        from sunshine_birth a
+    </select>
+
+
+    <resultMap id="uidValueResultMap" type="UidValue">
+        <id property="uid" column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="value" column="value" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+</mapper>
